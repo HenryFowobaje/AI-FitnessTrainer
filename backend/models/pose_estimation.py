@@ -1,42 +1,56 @@
 import cv2
-import mediapipe as mp
+import numpy as np
+import tensorflow as tf
+import tensorflow_hub as hub
+from collections import deque
 
-# Initialize MediaPipe Pose
-mp_pose = mp.solutions.pose
-mp_drawing = mp.solutions.drawing_utils  # Helps draw landmarks and connections
-pose = mp_pose.Pose()
+# Load MoveNet model (Thunder version for better accuracy)
+movenet = hub.load("https://tfhub.dev/google/movenet/singlepose/thunder/4")
 
-# Open webcam
-cap = cv2.VideoCapture(0)
+def detect_pose(image):
+    """
+    Given an image (RGB), returns the detected keypoints from MoveNet.
+    Keypoints are in the format [(x, y), ...] in pixel coordinates.
+    """
+    input_image = tf.image.resize_with_pad(tf.expand_dims(image, axis=0), 256, 256)
+    input_tensor = tf.cast(input_image, dtype=tf.int32)
+    outputs = movenet.signatures["serving_default"](input_tensor)
+    keypoints = outputs["output_0"].numpy()[0, 0]
 
-while cap.isOpened():
-    ret, frame = cap.read()
-    if not ret:
-        break
+    # Convert from (y, x, score) to (x, y) in pixel coordinates
+    height, width = image.shape[:2]
+    keypoints = [(kp[1] * width, kp[0] * height) for kp in keypoints]
+    return keypoints
 
-    # Convert the image to RGB (for MediaPipe)
-    image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    results = pose.process(image)
+def calc_angle(a, b, c):
+    """
+    Calculates the angle (in degrees) at point b given three points (a, b, c).
+    """
+    a_arr, b_arr, c_arr = np.array(a), np.array(b), np.array(c)
+    ba = a_arr - b_arr
+    bc = c_arr - b_arr
+    if np.linalg.norm(ba) == 0 or np.linalg.norm(bc) == 0:
+        return 0.0
+    cosine_angle = np.dot(ba, bc) / (np.linalg.norm(ba) * np.linalg.norm(bc))
+    cosine_angle = np.clip(cosine_angle, -1.0, 1.0)
+    return round(np.degrees(np.arccos(cosine_angle)), 2)
 
-    # Convert back to BGR for OpenCV display
-    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+def compute_shoulder_tilt(left_shoulder, right_shoulder):
+    """
+    Computes the tilt angle of the line between the left and right shoulder
+    relative to the horizontal.
+    """
+    dx = right_shoulder[0] - left_shoulder[0]
+    dy = right_shoulder[1] - left_shoulder[1]
+    return np.degrees(np.arctan2(dy, dx))
 
-    # Draw landmarks if a person is detected
-    if results.pose_landmarks:
-        mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
-
-        # **NEW: Label key points with index numbers**
-        for idx, landmark in enumerate(results.pose_landmarks.landmark):
-            h, w, _ = frame.shape
-            cx, cy = int(landmark.x * w), int(landmark.y * h)
-            cv2.putText(image, str(idx), (cx, cy), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
-
-    # Show the processed frame
-    cv2.imshow("Pose Estimation", image)
-
-    # Press 'q' to exit
-    if cv2.waitKey(10) & 0xFF == ord("q"):
-        break
-
-cap.release()
-cv2.destroyAllWindows()
+class Smoother:
+    """
+    Helper class to smooth a stream of values using a fixed-size window.
+    """
+    def __init__(self, window_size=5):
+        self.window = deque(maxlen=window_size)
+    
+    def update(self, value):
+        self.window.append(value)
+        return np.mean(self.window)
