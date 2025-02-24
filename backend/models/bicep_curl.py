@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import time
 import json
+import os
 from pose_estimation import detect_pose, calc_angle, compute_shoulder_tilt, Smoother
 import mediapipe as mp
 
@@ -28,6 +29,9 @@ def save_progress(user, left_reps, right_reps):
 
 # ----- MAIN FUNCTION FOR BICEP CURLS -----
 def run_bicep_curls():
+    # script_dir = os.path.dirname(os.path.abspath(__file__))
+    # video_path = os.path.join(script_dir, "pushupstest.mp4")
+    # cap = cv2.VideoCapture(video_path)
     cap = cv2.VideoCapture(0)
     pose = mp_pose.Pose(min_detection_confidence=0.7, min_tracking_confidence=0.5)
 
