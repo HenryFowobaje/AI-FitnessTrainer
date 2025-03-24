@@ -1,0 +1,13 @@
+blinker
+click
+Flask
+flask-cors
+itsdangerous
+Jinja2
+MarkupSafe
+Werkzeug
+opencv-python
+numpy
+mediapipe
+tensorflow
+tensorflow-hub

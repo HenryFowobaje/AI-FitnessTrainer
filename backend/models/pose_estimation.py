@@ -5,7 +5,7 @@ import tensorflow_hub as hub
 from collections import deque
 
 # Load MoveNet model (Thunder version for better accuracy)
-movenet = hub.load("https://tfhub.dev/google/movenet/singlepose/thunder/4")
+movenet = hub.load("https://tfhub.dev/google/movenet/singlepose/thunder/3")
 
 def detect_pose(image):
     """
