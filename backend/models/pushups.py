@@ -12,11 +12,11 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(mes
 
 class Config:
     # Elbow angles for a proper push-up
-    BENT_ANGLE = 90         # Elbow angle at the bottom (down phase)
+    BENT_ANGLE = 100         # Elbow angle at the bottom (down phase)
     EXTENDED_ANGLE = 170    # Elbow angle at the top (up phase)
     SMOOTHING_WINDOW = 5    # Frames for angle smoothing
     # Body alignment: the torso (average shoulder to hip line) should be nearly horizontal.
-    BODY_ALIGNMENT_THRESHOLD = 20  
+    BODY_ALIGNMENT_THRESHOLD = 10  
     TARGET_REPS = 20        # Target push-up count (for progress tracking)
     VIDEO_FILENAME = None   # Set to None to use webcam.
     VIDEO_SOURCE = 0        # Use webcam if VIDEO_FILENAME is None.
@@ -28,9 +28,10 @@ mp_pose = mp.solutions.pose
 class PushupCounter:
     def __init__(self, config: Config):
         self.config = config
-        self.pushup_count = 0
-        self.pushup_flag = False  # True when user is in the "down" phase
+        self.count = 0
+        self.direction = "upwards"  # Can be "upwards" or "downwards"
         self.angle_smoother = Smoother(window_size=config.SMOOTHING_WINDOW)
+        self.progress = 0  # Percent of the current push-up completion
 
     def process_keypoints(self, keypoints):
         """
@@ -39,8 +40,8 @@ class PushupCounter:
         """
         if len(keypoints) < 17:
             return None, "Insufficient keypoints detected"
-        
-        # Extract key landmarks using MoveNet ordering.
+
+        # Extract relevant keypoints
         left_shoulder  = keypoints[5]
         right_shoulder = keypoints[6]
         left_elbow     = keypoints[7]
@@ -49,28 +50,35 @@ class PushupCounter:
         right_wrist    = keypoints[10]
         left_hip       = keypoints[11]
         right_hip      = keypoints[12]
-        
-        # Calculate the elbow angles (shoulder->elbow->wrist).
+
+        # Calculate elbow angles
         left_elbow_angle = calc_angle(left_shoulder, left_elbow, left_wrist)
         right_elbow_angle = calc_angle(right_shoulder, right_elbow, right_wrist)
-        avg_elbow_angle = (left_elbow_angle + right_elbow_angle) / 2
-        avg_elbow_angle = self.angle_smoother.update(avg_elbow_angle)
-        
-        # Compute body alignment angle.
+        raw_avg_elbow_angle = (left_elbow_angle + right_elbow_angle) / 2
+
+        # Calculate body alignment
         body_alignment_angle = compute_body_alignment_angle(left_shoulder, right_shoulder, left_hip, right_hip)
-        proper_alignment = body_alignment_angle < self.config.BODY_ALIGNMENT_THRESHOLD
-        
-        # Only count a rep if alignment is proper.
+        proper_alignment = True
+
+        # Interpolate percentage (e.g. 0% at bent, 100% at extended)
+        self.progress = np.interp(raw_avg_elbow_angle,
+                                  (self.config.BENT_ANGLE, self.config.EXTENDED_ANGLE),
+                                  (0, 100))
+
+        # Count push-ups based on full rep completion (down then up)
         if proper_alignment:
-            if avg_elbow_angle < self.config.BENT_ANGLE and not self.pushup_flag:
-                self.pushup_flag = True
-            elif avg_elbow_angle > self.config.EXTENDED_ANGLE and self.pushup_flag:
-                self.pushup_count += 1
-                self.pushup_flag = False
+            if self.progress < 5 and self.direction == "upwards":
+                self.direction = "downwards"
+            elif self.progress > 95 and self.direction == "downwards":
+                self.count += 1
+                self.direction = "upwards"
         else:
-            self.pushup_flag = False
-        
-        feedback = "Fix Alignment" if not proper_alignment else ("Down" if self.pushup_flag else "Up")
+            self.direction = "upwards"  # Reset if misaligned
+
+        # Smooth for UI
+        avg_elbow_angle = self.angle_smoother.update(raw_avg_elbow_angle)
+
+        feedback = "Fix Alignment" if not proper_alignment else ("Down" if self.direction == "downwards" else "Up")
         return avg_elbow_angle, feedback
 
 def compute_body_alignment_angle(left_shoulder, right_shoulder, left_hip, right_hip):
@@ -132,14 +140,18 @@ def process_pushup_frame(frame, pushup_counter, pose, config):
       - Renders an overlay onto the frame.
     Returns the annotated frame.
     """
-    # (Optional: Flip the frame if needed)
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = pose.process(rgb_frame)
+
+    # ✅ Person presence check (using landmark[0] visibility)
+    if not results.pose_landmarks or results.pose_landmarks.landmark[0].visibility < 0.5:
+        return frame  # Person not confidently detected
+
     keypoints = detect_pose(rgb_frame)
     avg_elbow_angle, feedback = pushup_counter.process_keypoints(keypoints)
     if avg_elbow_angle is None:
         return frame  # Return unmodified if detection fails.
-    frame_ui = render_ui(frame, avg_elbow_angle, feedback, pushup_counter.pushup_count, config)
-    if results.pose_landmarks:
-        mp_drawing.draw_landmarks(frame_ui, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
+
+    frame_ui = render_ui(frame, avg_elbow_angle, feedback, pushup_counter.count, config)
+    mp_drawing.draw_landmarks(frame_ui, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
     return frame_ui

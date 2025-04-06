@@ -35,7 +35,7 @@ function Pushups() {
       {/* Hero / Header Section */}
       <header className="pushups-hero">
         <div className="hero-content">
-          <h1>Pushups Trainer</h1>
+          <h1 style={{ color: "#000" }}>Pushups Trainer</h1>
           <p>
             Perfect your pushup form with real-time AI feedback. Position yourself in front of the camera
             and follow the instructions.

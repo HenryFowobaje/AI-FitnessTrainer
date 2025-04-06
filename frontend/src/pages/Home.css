@@ -1,217 +1,290 @@
 /* Home.css */
-
+.hero-section .hero-content .hero-subtitle {
+  color: #fff !important;
+  font-size: 1.5rem;
+}
+/* Global Styles */
 .home-container {
-    font-family: sans-serif;
-    color: #333;
-  }
-  
-  /* Hero Section */
-  .hero-section {
-    background: linear-gradient(90deg, #6c63ff 0%, #8a85ff 100%);
-    color: #fff;
-    padding: 80px 20px;
-    text-align: center;
-  }
-  
-  .hero-content {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .hero-content h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
-  
-  .hero-content p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-  }
-  
-  .cta-button {
-    background-color: #fff;
-    color: #6c63ff;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
-  }
-  
-  .cta-button:hover {
-    background-color: #eee;
-  }
-  
-  /* How FitPal Works */
-  .how-it-works {
-    padding: 60px 20px;
-    text-align: center;
-  }
-  
-  .how-it-works h2 {
-    font-size: 2.2rem;
-    margin-bottom: 40px;
-  }
-  
-  .features {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 40px;
-  }
-  
-  .feature-card {
-    width: 250px;
-    background-color: #f8f8f8;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .feature-card img {
-    width: 60px;
-    margin-bottom: 15px;
-  }
-  
-  .feature-card h3 {
-    margin-bottom: 10px;
-  }
-  
-  /* Start Training Now */
-  .start-training {
-    padding: 60px 20px;
-    text-align: center;
-    background-color: #fafafa;
-  }
-  
-  .start-training h2 {
-    font-size: 2.2rem;
-    margin-bottom: 40px;
-  }
-  
-  .training-cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 40px;
-  }
-  
-  .training-card {
-    width: 250px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .training-card img {
-    width: 60px;
-    margin-bottom: 15px;
-  }
-  
-  .training-card h3 {
-    margin-bottom: 10px;
-  }
-  
-  .training-button {
-    background-color: #6c63ff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-top: 10px;
-    border-radius: 4px;
-  }
-  
-  .training-button:hover {
-    background-color: #574fdb;
-  }
-  
-  /* Stats Section */
-  .stats-section {
-    display: flex;
-    justify-content: center;
-    gap: 60px;
-    padding: 40px 20px;
-    background-color: #f8f8f8;
-  }
-  
-  .stat-card {
-    text-align: center;
-  }
-  
-  .stat-card h3 {
-    font-size: 2rem;
-    color: #6c63ff;
-    margin-bottom: 0.5rem;
-  }
-  
-  /* CTA Section */
-  .cta-section {
-    background: linear-gradient(90deg, #6c63ff 0%, #8a85ff 100%);
-    color: #fff;
-    text-align: center;
-    padding: 60px 20px;
-  }
-  
-  .cta-section h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-  
-  .cta-section p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-  }
-  
-  /* Footer */
-  .footer {
-    background-color: #111;
-    color: #aaa;
-    padding: 40px 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px;
-    justify-content: space-between;
-  }
-  
-  .footer-brand {
-    max-width: 300px;
-  }
-  
-  .footer-brand h3 {
-    color: #fff;
-    margin-bottom: 10px;
-  }
-  
-  .footer-links {
-    display: flex;
-    gap: 40px;
-  }
-  
-  .footer-links h4 {
-    margin-bottom: 10px;
-    color: #fff;
-  }
-  
-  .footer-links ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .footer-links li {
-    margin-bottom: 6px;
-  }
-  
-  .footer-bottom {
-    width: 100%;
-    text-align: center;
-    margin-top: 30px;
-    border-top: 1px solid #444;
-    padding-top: 20px;
-    color: #666;
-  }
-  
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(90deg, #6c63ff 0%, #8a85ff 100%);
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #fff;
+}
+
+.hero-subtitle {
+  color: #fff !important;
+}
+
+/* Hero Buttons: Container with gradient behind the buttons */
+.hero-buttons {
+  display: inline-flex;
+  gap: 10px;
+  margin-top: 20px;
+  background: linear-gradient(90deg, #6c63ff 0%, #8a85ff 100%);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.cta-button {
+  background-color: #fff;
+  color: #6c63ff;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.cta-button:hover {
+  background-color: #eee;
+}
+
+/* How FitPal Works */
+.how-it-works {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.how-it-works h2 {
+  font-size: 2.2rem;
+  margin-bottom: 40px;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.feature-card {
+  width: 250px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card img {
+  width: 60px;
+  margin-bottom: 15px;
+}
+
+.feature-card h3 {
+  margin-bottom: 10px;
+}
+
+/* Start Training Now */
+.start-training {
+  padding: 60px 20px;
+  text-align: center;
+  background-color: #fafafa;
+}
+
+.start-training h2 {
+  font-size: 2.2rem;
+  margin-bottom: 40px;
+}
+
+.training-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.training-card {
+  width: 250px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.training-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.training-card img {
+  width: 60px;
+  margin-bottom: 15px;
+}
+
+.training-card h3 {
+  margin-bottom: 10px;
+}
+
+.training-button {
+  background-color: #6c63ff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.training-button:hover {
+  background-color: #574fdb;
+  text-decoration: none;
+}
+
+/* Stats Section */
+.stats-section {
+  background-color: #f0f0f0;
+  padding: 60px 20px;
+}
+
+/* Wrap the stat cards in a flex container for a horizontal layout */
+.stats-section .section-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  /* Remove or set flex-wrap to nowrap if you want them strictly in one row */
+  flex-wrap: wrap; 
+}
+
+.stat-card {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  min-width: 150px;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-card h3 {
+  font-size: 2.5rem;
+  color: #6c63ff;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* CTA Section */
+.cta-section {
+  background: linear-gradient(90deg, #6c63ff 0%, #8a85ff 100%);
+  color: #fff;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.cta-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.cta-section p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+/* Footer */
+.footer {
+  background-color: #1a1a1a;
+  color: #ddd;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.footer .section-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.footer-brand {
+  max-width: 300px;
+}
+
+.footer-brand h3 {
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.footer-brand p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.footer-links h4 {
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-links li:hover {
+  color: #fff;
+  cursor: pointer;
+}
+
+.footer-bottom {
+  border-top: 1px solid #333;
+  padding-top: 20px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #aaa;
+}

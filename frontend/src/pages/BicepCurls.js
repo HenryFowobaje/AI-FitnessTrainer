@@ -36,7 +36,7 @@ function BicepCurls() {
       {/* Hero / Header Section */}
       <header className="bicep-hero">
         <div className="hero-content">
-          <h1>Bicep Curls Trainer</h1>
+          <h1 style={{ color: "#000" }}>Bicep Curls Trainer</h1>
           <p>
             Perfect your bicep curl form with real-time AI feedback. Position yourself in front
             of the camera and follow the instructions.

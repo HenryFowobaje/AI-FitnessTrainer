@@ -3,56 +3,53 @@ import cv2
 import mediapipe as mp
 import logging
 from models.pushups import Config, PushupCounter, process_pushup_frame
-# Import shared pose_estimation functions if needed (they are already used in process_pushup_frame)
-# from models.pose_estimation import detect_pose, calc_angle, compute_shoulder_tilt
+from resource_manager import ResourceManager  # Centralized resource manager
 
-pushups_bp = Blueprint('pushups', __name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
+pushups_bp = Blueprint('pushups', __name__)
 
-# Initialize MediaPipe Pose for drawing
-mp_pose = mp.solutions.pose
-pose = mp_pose.Pose(min_detection_confidence=0.7, min_tracking_confidence=0.5)
-mp_drawing = mp.solutions.drawing_utils
-
-# Lazy camera initialization for pushups
-camera = None
-workout_started = False
-pushup_counter = None  # will be initialized in start route
-config = Config()
+# Get the shared resource manager instance.
+resource_manager = ResourceManager.get_instance()
 
 def init_camera():
-    global camera
-    if camera is None:
-        # Use video file if specified, otherwise use webcam.
-        if config.VIDEO_FILENAME:
-            import os
-            script_dir = os.path.dirname(os.path.abspath(__file__))
-            video_path = os.path.join(script_dir, config.VIDEO_FILENAME)
-            camera = cv2.VideoCapture(video_path)
-        else:
-            camera = cv2.VideoCapture(config.VIDEO_SOURCE)
-    return camera
+    config = Config()
+    # If a video file is specified, use it; otherwise, use the webcam.
+    if config.VIDEO_FILENAME:
+        import os
+        script_dir = os.path.dirname(__file__)
+        video_path = os.path.join(script_dir, config.VIDEO_FILENAME)
+        return cv2.VideoCapture(video_path)
+    else:
+        return resource_manager.init_camera(source=config.VIDEO_SOURCE)
+
+# Shared Pose instance
+pose = resource_manager.get_pose()
+config = Config()
+pushup_counter = PushupCounter(config)
+
+# Global flag to control streaming for pushups
+streaming_active_pushups = True
 
 @pushups_bp.route('/start-pushups', methods=['GET'])
 def start_pushups():
-    global workout_started, pushup_counter
+    global streaming_active_pushups, pushup_counter
+    streaming_active_pushups = True  # Enable streaming
     cam = init_camera()
     if not cam.isOpened():
         return jsonify({"message": "Error: Unable to access camera."}), 500
-    pushup_counter = PushupCounter(config)
-    workout_started = True
+    pushup_counter = PushupCounter(config)  # Reinitialize counter if needed
     return jsonify({"message": "✅ Pushup trainer started successfully!"})
 
 @pushups_bp.route('/video_feed/pushups', methods=['GET'])
 def video_feed_pushups():
-    if not workout_started:
+    if not init_camera().isOpened():
         return jsonify({"message": "Camera not started. Start workout first."}), 403
-    return Response(generate_frames(), mimetype="multipart/x-mixed-replace; boundary=frame")
+    return Response(generate_frames_pushups(), mimetype="multipart/x-mixed-replace; boundary=frame")
 
-def generate_frames():
-    global camera, pushup_counter, pose
+def generate_frames_pushups():
+    global streaming_active_pushups
     cam = init_camera()
-    while True:
+    while streaming_active_pushups:
         ret, frame = cam.read()
         if not ret:
             break
@@ -62,13 +59,12 @@ def generate_frames():
             break
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + buffer.tobytes() + b'\r\n')
+    # When streaming_active_pushups becomes False, the loop exits.
+    return
 
 @pushups_bp.route('/end-pushups', methods=['GET'])
 def end_pushups():
-    global workout_started, camera
-    if camera is not None:
-        camera.release()  # Release the camera
-        camera = None
-    workout_started = False
+    global streaming_active_pushups
+    streaming_active_pushups = False  # Signal the generator to stop
+    resource_manager.release_camera()  # Release the shared camera resource
     return jsonify({"message": "Pushup workout ended."})
-

@@ -36,7 +36,7 @@ function Squats() {
       {/* Hero / Header Section */}
       <header className="squats-hero">
         <div className="hero-content">
-          <h1>Squats Trainer</h1>
+          <h1 style={{ color: "#000" }}>Squats Trainer</h1>
           <p>
             Perfect your squat form with real-time AI feedback. Position yourself in front of the camera
             and follow the instructions.
