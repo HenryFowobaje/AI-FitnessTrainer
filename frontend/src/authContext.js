@@ -1,14 +1,23 @@
 // authContext.js
-import React, { createContext, useContext, useState } from 'react';
-import { auth } from './firebase'; // Correctly import the named export
-import { onAuthStateChanged,signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { auth } from './firebase';
+import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  // Login function (update with your actual Firebase logic)
+  // Listen for auth state changes
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    // Cleanup subscription on unmount
+    return unsubscribe;
+  }, []);
+
+  // Login function
   const login = async (email, password) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);

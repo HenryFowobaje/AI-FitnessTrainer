@@ -30,5 +30,29 @@
     "duration_sec": 36.79,
     "mode": "default",
     "calories": 0.0
+  },
+  {
+    "workout": "squats",
+    "timestamp": "2025-04-07T06:23:42.623968",
+    "reps": 0,
+    "duration_sec": 25.44,
+    "mode": "default",
+    "calories": 0.0
+  },
+  {
+    "workout": "squats",
+    "timestamp": "2025-04-07T06:25:37.146693",
+    "reps": 0,
+    "duration_sec": 11.32,
+    "mode": "default",
+    "calories": 0.0
+  },
+  {
+    "workout": "squats",
+    "timestamp": "2025-04-07T06:39:30.509609",
+    "reps": 0,
+    "duration_sec": 18.95,
+    "mode": "default",
+    "calories": 0.0
   }
 ]

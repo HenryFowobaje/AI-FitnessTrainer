@@ -3,9 +3,9 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC03c1d-mokxhRygZH2kHPcpTB3CoR8XMw",
-  authDomain: "ai-fitnesstrainer-9a182.firebaseapp.com",
-  projectId: "ai-fitnesstrainer-9a182",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
