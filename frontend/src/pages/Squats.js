@@ -5,35 +5,41 @@ import './Squats.css';
 function Squats() {
   const [message, setMessage] = useState('');
   const [workoutStarted, setWorkoutStarted] = useState(false);
-  const [repCount, setRepCount] = useState(null);
+  const [repData, setRepData] = useState(null);
 
   const startSquats = async () => {
     try {
       const res = await axios.get('http://127.0.0.1:5000/start-squats');
       setMessage(res.data.message);
       setWorkoutStarted(true);
+      setRepData(null);
     } catch (error) {
       setMessage('❌ Failed to start squat trainer.');
     }
   };
 
-  // Optional: If you have an end-squats route
   const endSquats = async () => {
     try {
       const res = await axios.get('http://127.0.0.1:5000/end-squats');
       setMessage(res.data.message);
       setWorkoutStarted(false);
-      if (res.data.reps !== undefined) {
-        setRepCount(res.data.reps);
-      }
     } catch (error) {
       setMessage('❌ Failed to end squat workout.');
     }
   };
 
+  const generateReport = async () => {
+    try {
+      const res = await axios.get('http://127.0.0.1:5000/generate-squats-report');
+      setRepData(res.data);
+      setMessage(res.data.message);
+    } catch (error) {
+      setMessage('❌ Failed to generate report.');
+    }
+  };
+
   return (
     <div className="squats-page">
-      {/* Hero / Header Section */}
       <header className="squats-hero">
         <div className="hero-content">
           <h1 style={{ color: "#000" }}>Squats Trainer</h1>
@@ -46,15 +52,19 @@ function Squats() {
               Start Squat Trainer
             </button>
           ) : (
-            <button className="hero-button end-button" onClick={endSquats}>
-              End Workout
-            </button>
+            <>
+              <button className="hero-button end-button" onClick={endSquats}>
+                End Workout
+              </button>
+              <button className="hero-button end-button" onClick={generateReport}>
+                Generate Report
+              </button>
+            </>
           )}
           {message && <p className="hero-message">{message}</p>}
         </div>
       </header>
 
-      {/* Main Content Section */}
       <main className="squats-main">
         {workoutStarted ? (
           <div className="live-feed-section">
@@ -72,53 +82,15 @@ function Squats() {
           </p>
         )}
 
-        {!workoutStarted && repCount !== null && (
+        {!workoutStarted && repData && (
           <div className="summary-section">
             <h3>Workout Summary</h3>
-            <p>You completed {repCount} squats!</p>
+            <p>✅ You completed <strong>{repData.reps}</strong> squats!</p>
+            <p>⏱️ Duration: {repData.duration} seconds</p>
+            <p>🔥 Estimated Calories Burned: {repData.calories} kcal</p>
           </div>
         )}
       </main>
-
-      {/* Footer (matching the dark style) */}
-      <footer className="squats-footer">
-        <div className="footer-content">
-          <div className="footer-brand">
-            <h3>FitPal</h3>
-            <p>Your AI-powered fitness trainer for perfect form and personalized workouts.</p>
-          </div>
-          <div className="footer-links">
-            <div>
-              <h4>Exercises</h4>
-              <ul>
-                <li>Pushups</li>
-                <li>Squats</li>
-                <li>Bicep Curls</li>
-              </ul>
-            </div>
-            <div>
-              <h4>Resources</h4>
-              <ul>
-                <li>About Us</li>
-                <li>Fitness Reports</li>
-                <li>Blog</li>
-                <li>FAQ</li>
-              </ul>
-            </div>
-            <div>
-              <h4>Legal</h4>
-              <ul>
-                <li>Privacy Policy</li>
-                <li>Terms of Service</li>
-                <li>Cookie Policy</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <p>© 2025 FitPal. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   );
 }

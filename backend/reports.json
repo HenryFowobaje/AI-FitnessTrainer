@@ -1,0 +1,26 @@
+[
+  {
+    "workout": "squats",
+    "timestamp": "2025-04-06T22:30:27.296555",
+    "reps": 2,
+    "duration_sec": 27.4,
+    "mode": "default",
+    "calories": 0.64
+  },
+  {
+    "workout": "squats",
+    "timestamp": "2025-04-06T22:31:51.453301",
+    "reps": 3,
+    "duration_sec": 37.84,
+    "mode": "default",
+    "calories": 0.96
+  },
+  {
+    "workout": "squats",
+    "timestamp": "2025-04-06T22:45:10.319294",
+    "reps": 6,
+    "duration_sec": 38.91,
+    "mode": "default",
+    "calories": 1.92
+  }
+]
