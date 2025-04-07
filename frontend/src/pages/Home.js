@@ -16,9 +16,9 @@ function Home() {
             </p>
             {/* Hero Buttons with gradient container */}
             <div className="hero-buttons">
-              <a href="#start-training" className="cta-button">
-                Get Started
-              </a>
+            <Link to="/signup" className="cta-button">
+              Get Started
+            </Link>
               <Link to="/about" className="cta-button secondary">
                 Learn More
               </Link>
