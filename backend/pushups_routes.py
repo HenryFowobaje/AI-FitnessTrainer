@@ -2,53 +2,41 @@ from flask import Blueprint, Response, jsonify
 import cv2
 import mediapipe as mp
 import logging
+import time
 from models.pushups import Config, PushupCounter, process_pushup_frame
-from resource_manager import ResourceManager  # Centralized resource manager
+from resource_manager import ResourceManager
+from utils import save_report  # ✅ NEW import
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
 pushups_bp = Blueprint('pushups', __name__)
 
-# Get the shared resource manager instance.
 resource_manager = ResourceManager.get_instance()
-
-def init_camera():
-    config = Config()
-    # If a video file is specified, use it; otherwise, use the webcam.
-    if config.VIDEO_FILENAME:
-        import os
-        script_dir = os.path.dirname(__file__)
-        video_path = os.path.join(script_dir, config.VIDEO_FILENAME)
-        return cv2.VideoCapture(video_path)
-    else:
-        return resource_manager.init_camera(source=config.VIDEO_SOURCE)
-
-# Shared Pose instance
 pose = resource_manager.get_pose()
 config = Config()
 pushup_counter = PushupCounter(config)
-
-# Global flag to control streaming for pushups
 streaming_active_pushups = True
+session_start_time = None
 
 @pushups_bp.route('/start-pushups', methods=['GET'])
 def start_pushups():
-    global streaming_active_pushups, pushup_counter
-    streaming_active_pushups = True  # Enable streaming
-    cam = init_camera()
+    global streaming_active_pushups, pushup_counter, session_start_time
+    streaming_active_pushups = True
+    session_start_time = time.time()
+    cam = resource_manager.init_camera(source=config.VIDEO_SOURCE)
     if not cam.isOpened():
         return jsonify({"message": "Error: Unable to access camera."}), 500
-    pushup_counter = PushupCounter(config)  # Reinitialize counter if needed
+    pushup_counter = PushupCounter(config)
     return jsonify({"message": "✅ Pushup trainer started successfully!"})
 
 @pushups_bp.route('/video_feed/pushups', methods=['GET'])
 def video_feed_pushups():
-    if not init_camera().isOpened():
+    if not resource_manager.init_camera().isOpened():
         return jsonify({"message": "Camera not started. Start workout first."}), 403
     return Response(generate_frames_pushups(), mimetype="multipart/x-mixed-replace; boundary=frame")
 
 def generate_frames_pushups():
     global streaming_active_pushups
-    cam = init_camera()
+    cam = resource_manager.init_camera()
     while streaming_active_pushups:
         ret, frame = cam.read()
         if not ret:
@@ -59,12 +47,27 @@ def generate_frames_pushups():
             break
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + buffer.tobytes() + b'\r\n')
-    # When streaming_active_pushups becomes False, the loop exits.
-    return
 
 @pushups_bp.route('/end-pushups', methods=['GET'])
 def end_pushups():
     global streaming_active_pushups
-    streaming_active_pushups = False  # Signal the generator to stop
-    resource_manager.release_camera()  # Release the shared camera resource
-    return jsonify({"message": "Pushup workout ended."})
+    streaming_active_pushups = False
+    resource_manager.release_camera()
+    return jsonify({"message": "Pushup workout ended.", "pushups": pushup_counter.count})
+
+@pushups_bp.route('/generate-pushups-report', methods=['GET'])
+def generate_pushups_report():
+    global session_start_time
+    end_time = time.time()
+    duration = round(end_time - session_start_time, 2) if session_start_time else 0
+    reps = pushup_counter.count
+
+    report = save_report("pushups", reps, duration, mode="default")
+    pushup_counter.count = 0  # Reset counter manually
+
+    return jsonify({
+        "message": "📄 Pushup report generated!",
+        "reps": reps,
+        "duration": duration,
+        "calories": report["calories"]
+    })
