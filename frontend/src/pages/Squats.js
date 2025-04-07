@@ -31,7 +31,7 @@ function Squats() {
 
   const generateReport = async () => {
     try {
-      const res = await axios.get('http://127.0.0.1:5000/generate-squats-report');
+      const res = await axios.get("http://127.0.0.1:5000/generate-squats-report");
       const reportData = res.data;
       setRepData(reportData);
       setMessage(reportData.message);
