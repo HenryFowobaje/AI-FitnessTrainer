@@ -5,35 +5,41 @@ import './BicepCurls.css';
 function BicepCurls() {
   const [message, setMessage] = useState('');
   const [workoutStarted, setWorkoutStarted] = useState(false);
-  const [repCount, setRepCount] = useState(null);
+  const [repData, setRepData] = useState(null);
 
   const startBicepCurls = async () => {
     try {
       const res = await axios.get('http://127.0.0.1:5000/start-bicep-curls');
       setMessage(res.data.message);
       setWorkoutStarted(true);
+      setRepData(null);
     } catch (error) {
       setMessage('❌ Failed to start bicep curl trainer.');
     }
   };
 
-  // Optional: If you have an end-bicep-curls route
   const endBicepCurls = async () => {
     try {
       const res = await axios.get('http://127.0.0.1:5000/end-bicep-curls');
       setMessage(res.data.message);
       setWorkoutStarted(false);
-      if (res.data.reps !== undefined) {
-        setRepCount(res.data.reps);
-      }
     } catch (error) {
       setMessage('❌ Failed to end bicep curl workout.');
     }
   };
 
+  const generateReport = async () => {
+    try {
+      const res = await axios.get('http://127.0.0.1:5000/generate-bicep-curls-report');
+      setRepData(res.data);
+      setMessage(res.data.message);
+    } catch (error) {
+      setMessage('❌ Failed to generate report.');
+    }
+  };
+
   return (
     <div className="bicep-curls-page">
-      {/* Hero / Header Section */}
       <header className="bicep-hero">
         <div className="hero-content">
           <h1 style={{ color: "#000" }}>Bicep Curls Trainer</h1>
@@ -46,15 +52,19 @@ function BicepCurls() {
               Start Bicep Curl Trainer
             </button>
           ) : (
-            <button className="hero-button end-button" onClick={endBicepCurls}>
-              End Workout
-            </button>
+            <>
+              <button className="hero-button end-button" onClick={endBicepCurls}>
+                End Workout
+              </button>
+              <button className="hero-button end-button" style={{ marginLeft: '10px' }} onClick={generateReport}>
+                Generate Report
+              </button>
+            </>
           )}
           {message && <p className="hero-message">{message}</p>}
         </div>
       </header>
 
-      {/* Main Content Section */}
       <main className="bicep-main">
         {workoutStarted ? (
           <div className="live-feed-section">
@@ -72,15 +82,16 @@ function BicepCurls() {
           </p>
         )}
 
-        {!workoutStarted && repCount !== null && (
+        {!workoutStarted && repData && (
           <div className="summary-section">
             <h3>Workout Summary</h3>
-            <p>You completed {repCount} bicep curls!</p>
+            <p>✅ You completed <strong>{repData.reps}</strong> bicep curls!</p>
+            <p>⏱️ Duration: {repData.duration} seconds</p>
+            <p>🔥 Estimated Calories Burned: {repData.calories} kcal</p>
           </div>
         )}
       </main>
 
-      {/* Footer (matching the dark style) */}
       <footer className="bicep-footer">
         <div className="footer-content">
           <div className="footer-brand">
