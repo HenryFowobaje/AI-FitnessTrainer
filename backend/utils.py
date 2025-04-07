@@ -3,7 +3,7 @@ from datetime import datetime
 
 def save_report(workout_type, reps, duration, mode="default", filename="reports.json"):
     calories_per_rep = {
-        "pushups": 0.29,  # average kcal burned per pushup
+        "pushups": 0.29,
         "squats": 0.32,
         "bicep_curls": 0.28
     }

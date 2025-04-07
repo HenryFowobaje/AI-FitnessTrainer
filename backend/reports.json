@@ -32,10 +32,26 @@
     "calories": 0.0
   },
   {
+    "workout": "pushups",
+    "timestamp": "2025-04-07T02:25:18.042035",
+    "reps": 0,
+    "duration_sec": 20.04,
+    "mode": "default",
+    "calories": 0.0
+  },
+  {
     "workout": "squats",
     "timestamp": "2025-04-07T06:23:42.623968",
     "reps": 0,
     "duration_sec": 25.44,
+    "mode": "default",
+    "calories": 0.0
+  },
+  {
+    "workout": "pushups",
+    "timestamp": "2025-04-07T02:46:27.999328",
+    "reps": 0,
+    "duration_sec": 6.06,
     "mode": "default",
     "calories": 0.0
   },
@@ -53,6 +69,14 @@
     "reps": 0,
     "duration_sec": 18.95,
     "mode": "default",
+    "calories": 0.0
+  },
+  {
+    "workout": "bicep_curls",
+    "timestamp": "2025-04-07T03:23:44.781872",
+    "reps": 0,
+    "duration_sec": 5.46,
+    "mode": "both",
     "calories": 0.0
   }
 ]
