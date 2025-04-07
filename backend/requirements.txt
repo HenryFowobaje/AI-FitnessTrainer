@@ -1,8 +1,7 @@
-Flask==3.1.0
-flask_cors==5.0.1
-mediapipe==0.10.21
-numpy==2.2.4
-opencv_contrib_python==4.11.0.86
-opencv_python==4.11.0.86
-tensorflow==2.18.1
-tensorflow_hub==0.16.1
+Flask
+flask_cors
+mediapipe
+opencv_contrib_python
+opencv_python
+tensorflow
+tensorflow_hub
