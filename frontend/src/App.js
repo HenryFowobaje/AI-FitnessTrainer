@@ -9,6 +9,8 @@ import Pushups from './pages/Pushups';
 import BicepCurls from './pages/BicepCurls';
 import About from './pages/About';
 import Report from './pages/Report';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path="/bicep-curls" element={<BicepCurls />} />
         <Route path="/about" element={<About />} />
         <Route path="/report" element={<Report />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </Router>
   );

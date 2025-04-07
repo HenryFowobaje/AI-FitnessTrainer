@@ -1,0 +1,201 @@
+/* Reset & Basic Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", sans-serif; /* or another modern sans-serif */
+  }
+  
+  /* Page Background */
+  .login-page {
+    background-color: #f9fafb; /* Light gray background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  /* Card Container */
+  .login-card {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 420px;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    text-align: center;
+  }
+  
+  /* App Title & Subtitle */
+  .app-title {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    color: #111827;
+  }
+  
+  .welcome-text {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    color: #111827;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Tabs */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tab {
+    background-color: transparent;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #6b7280;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+  }
+  
+  .tab.active,
+  .tab:hover {
+    background-color: #f3f4f6;
+    color: #111827;
+  }
+  
+  /* Form Title & Subtitle */
+  .form-title {
+    font-size: 1.15rem;
+    margin-bottom: 0.25rem;
+    text-align: left;
+    color: #111827;
+  }
+  
+  .form-subtitle {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+  
+  /* Login Form */
+  .login-form {
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+  
+  /* Field Groups */
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+  
+  .field-group label {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+    color: #374151;
+  }
+  
+  .field-group input {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    color: #4b5563;
+  }
+  
+  .field-group input::placeholder {
+    color: #9ca3af;
+  }
+  
+  /* Actions row (Remember me & Forgot link) */
+  .actions-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .remember-me {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    color: #6b7280;
+  }
+  
+  .forgot-link {
+    font-size: 0.85rem;
+    color: #6366f1;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .forgot-link:hover {
+    color: #4338ca;
+  }
+  
+  /* Error Message */
+  .error-message {
+    color: #ef4444;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  /* Login Button */
+  .login-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #6366f1;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .login-btn:hover {
+    background-color: #4f46e5;
+  }
+  
+  /* Or Text */
+  .or-text {
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    color: #6b7280;
+    text-align: center;
+  }
+  
+  /* Social Login Buttons */
+  .social-login {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .social-btn {
+    flex: 1;
+    padding: 0.75rem;
+    background-color: #f3f4f6;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #4b5563;
+    font-size: 0.95rem;
+    transition: background-color 0.2s;
+  }
+  
+  .social-btn:hover {
+    background-color: #e5e7eb;
+  }
+  
