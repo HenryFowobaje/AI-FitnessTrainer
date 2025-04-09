@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './BicepCurls.css';
+import { saveWorkoutReport } from "../reportService";
 
 function BicepCurls() {
   const [message, setMessage] = useState('');
@@ -30,7 +31,7 @@ function BicepCurls() {
 
   const generateReport = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:5000/generate-squats-report");
+      const res = await axios.get("http://127.0.0.1:5000/generate-bicep-curls-report");
       const reportData = res.data;
       setRepData(reportData);
       setMessage(reportData.message);
