@@ -50,7 +50,7 @@ function BicepCurls() {
   
       await saveWorkoutReport(reportToSave);
     } catch (error) {
-      setMessage('❌ Failed to generate report.');
+      setMessage("❌ Failed to generate report.");
     }
   };
   

@@ -72,6 +72,7 @@ function Report() {
       <h2 className="report-title">Recent Workout History</h2>
       <p className="report-subtitle">Your last 5 workout sessions</p>
 
+<<<<<<< HEAD
       {loading ? (
         <p>Loading your progress...</p>
       ) : reportData.length === 0 ? (
@@ -95,6 +96,25 @@ function Report() {
           ))}
         </div>
       )}
+=======
+      <div className="report-list">
+        {reportData.map((entry, index) => (
+          <div key={index} className="report-card">
+            <div className="report-color-bar" />
+            <div className="report-info">
+              <div className="report-top-row">
+                <span className="report-type">{entry.type}</span>
+                <span className="report-reps">{entry.reps} reps</span>
+              </div>
+              <div className="report-bottom-row">
+                <span className="report-date">{entry.date}</span>
+                <span className="report-duration">{entry.duration}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+>>>>>>> 5a1e53fd8531ed1e5d37726b18254fcdff54e564
     </div>
   );
 }

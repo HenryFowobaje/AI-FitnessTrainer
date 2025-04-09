@@ -44,3 +44,16 @@
 .logout-btn:hover {
   background-color: #4f46e5;
 }
+
+.signin-btn {
+  background-color: #6c63ff;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.signin-btn:hover {
+  background-color: #574fd2;
+}
