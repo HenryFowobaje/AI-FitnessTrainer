@@ -17,7 +17,6 @@ function Login() {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log('User logged in:', userCredential.user);
-      navigate('/'); // Redirect to the home page
     } catch (err) {
       setError(err.message);
     }

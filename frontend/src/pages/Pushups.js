@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Pushups.css';
+import { saveWorkoutReport } from "../reportService";
 
 function Pushups() {
   const [message, setMessage] = useState('');
@@ -33,10 +34,25 @@ function Pushups() {
       const res = await axios.get('http://127.0.0.1:5000/generate-pushups-report');
       setRepData(res.data);
       setMessage(res.data.message);
+  
+      const reportToSave = {
+        workout: "pushups",
+        timestamp: new Date().toISOString(),
+        reps: res.data.reps,
+        duration_sec: res.data.duration,
+        mode: "default",
+        calories: res.data.calories
+      };
+
+      console.log("📝 Pushing this to Firebase:", reportToSave);
+
+  
+      await saveWorkoutReport(reportToSave);
     } catch (error) {
       setMessage('❌ Failed to generate report.');
     }
   };
+  
 
   return (
     <div className="pushups-page">

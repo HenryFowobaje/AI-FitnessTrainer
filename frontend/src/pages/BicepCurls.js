@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './BicepCurls.css';
+import { saveWorkoutReport } from "../reportService";
 
 function BicepCurls() {
   const [message, setMessage] = useState('');
@@ -31,12 +32,28 @@ function BicepCurls() {
   const generateReport = async () => {
     try {
       const res = await axios.get('http://127.0.0.1:5000/generate-bicep-curls-report');
-      setRepData(res.data);
-      setMessage(res.data.message);
+      const reportData = res.data;
+      setRepData(reportData);
+      setMessage(reportData.message);
+  
+      // Save report to Firebase
+      const reportToSave = {
+        workout: "bicep curls",
+        timestamp: new Date().toISOString(),
+        reps: res.data.reps,
+        duration_sec: res.data.duration,
+        mode: "default",
+        calories: res.data.calories
+      };
+
+      console.log("📝 Pushing this to Firebase:", reportToSave);
+  
+      await saveWorkoutReport(reportToSave);
     } catch (error) {
       setMessage('❌ Failed to generate report.');
     }
   };
+  
 
   return (
     <div className="bicep-curls-page">

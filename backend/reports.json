@@ -78,5 +78,181 @@
     "duration_sec": 5.46,
     "mode": "both",
     "calories": 0.0
+  },
+  {
+    "workout": "squats",
+    "timestamp": "2025-04-09T20:00:08.678227",
+    "reps": 0,
+    "duration_sec": 1.34,
+    "mode": "default",
+    "calories": 0.0
+  },
+  {
+    "workout": "squats",
+    "timestamp": "2025-04-09T20:01:13.539688",
+    "reps": 0,
+    "duration_sec": 3.51,
+    "mode": "default",
+    "calories": 0.0
+  },
+  {
+    "workout": "squats",
+    "timestamp": "2025-04-09T20:10:34.084562",
+    "reps": 0,
+    "duration_sec": 0.58,
+    "mode": "default",
+    "calories": 0.0
+  },
+  {
+    "workout": "pushups",
+    "timestamp": "2025-04-09T20:10:49.772571",
+    "reps": 0,
+    "duration_sec": 0.73,
+    "mode": "default",
+    "calories": 0.0
+  },
+  {
+    "workout": "bicep_curls",
+    "timestamp": "2025-04-09T20:11:03.110041",
+    "reps": 0,
+    "duration_sec": 0.63,
+    "mode": "both",
+    "calories": 0.0
+  },
+  {
+    "workout": "bicep_curls",
+    "timestamp": "2025-04-09T20:38:54.990967",
+    "reps": 0,
+    "duration_sec": 16.38,
+    "mode": "both",
+    "calories": 0.0
+  },
+  {
+    "workout": "bicep_curls",
+    "timestamp": "2025-04-09T20:39:02.504991",
+    "reps": 0,
+    "duration_sec": 23.9,
+    "mode": "both",
+    "calories": 0.0
+  },
+  {
+    "workout": "bicep_curls",
+    "timestamp": "2025-04-09T20:39:06.261992",
+    "reps": 0,
+    "duration_sec": 27.65,
+    "mode": "both",
+    "calories": 0.0
+  },
+  {
+    "workout": "pushups",
+    "timestamp": "2025-04-09T20:44:35.713424",
+    "reps": 0,
+    "duration_sec": 9.02,
+    "mode": "default",
+    "calories": 0.0
+  },
+  {
+    "workout": "bicep_curls",
+    "timestamp": "2025-04-09T20:44:55.112820",
+    "reps": 0,
+    "duration_sec": 13.11,
+    "mode": "both",
+    "calories": 0.0
+  },
+  {
+    "workout": "squats",
+    "timestamp": "2025-04-09T20:45:07.617691",
+    "reps": 0,
+    "duration_sec": 6.12,
+    "mode": "default",
+    "calories": 0.0
+  },
+  {
+    "workout": "squats",
+    "timestamp": "2025-04-09T20:48:09.896728",
+    "reps": 0,
+    "duration_sec": 0.74,
+    "mode": "default",
+    "calories": 0.0
+  },
+  {
+    "workout": "squats",
+    "timestamp": "2025-04-09T20:48:11.731730",
+    "reps": 0,
+    "duration_sec": 2.58,
+    "mode": "default",
+    "calories": 0.0
+  },
+  {
+    "workout": "squats",
+    "timestamp": "2025-04-09T20:48:13.614729",
+    "reps": 0,
+    "duration_sec": 4.46,
+    "mode": "default",
+    "calories": 0.0
+  },
+  {
+    "workout": "bicep_curls",
+    "timestamp": "2025-04-09T21:05:03.371312",
+    "reps": 0,
+    "duration_sec": 55.83,
+    "mode": "both",
+    "calories": 0.0
+  },
+  {
+    "workout": "squats",
+    "timestamp": "2025-04-09T21:06:23.188554",
+    "reps": 0,
+    "duration_sec": 74.23,
+    "mode": "default",
+    "calories": 0.0
+  },
+  {
+    "workout": "bicep_curls",
+    "timestamp": "2025-04-09T21:08:02.127482",
+    "reps": 0,
+    "duration_sec": 88.07,
+    "mode": "both",
+    "calories": 0.0
+  },
+  {
+    "workout": "bicep_curls",
+    "timestamp": "2025-04-09T21:11:06.288079",
+    "reps": 4,
+    "duration_sec": 272.23,
+    "mode": "both",
+    "calories": 1.12
+  },
+  {
+    "workout": "bicep_curls",
+    "timestamp": "2025-04-09T21:11:12.019071",
+    "reps": 0,
+    "duration_sec": 277.96,
+    "mode": "both",
+    "calories": 0.0
+  },
+  {
+    "workout": "bicep_curls",
+    "timestamp": "2025-04-09T21:11:13.997070",
+    "reps": 0,
+    "duration_sec": 279.94,
+    "mode": "both",
+    "calories": 0.0
+  },
+  {
+    "workout": "bicep_curls",
+    "timestamp": "2025-04-09T21:12:43.341048",
+    "reps": 0,
+    "duration_sec": 44.1,
+    "mode": "both",
+    "calories": 0.0
+  },
+  {
+    "workout": "bicep_curls",
+    "timestamp": "2025-04-09T21:19:09.721298",
+    "reps": 2,
+    "duration_sec": 131.66,
+    "mode": "both",
+    "calories": 0.56
   }
 ]
