@@ -66,7 +66,6 @@ function Report() {
 
     fetchReports();
   }, []);
-
   return (
     <div className="report-page">
       <h2 className="report-title">Recent Workout History</h2>
