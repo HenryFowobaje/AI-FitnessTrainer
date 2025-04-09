@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Pushups.css';
+import { saveWorkoutReport } from "../reportService";
 
 function Pushups() {
   const [message, setMessage] = useState('');
@@ -30,11 +31,24 @@ function Pushups() {
 
   const generateReport = async () => {
     try {
-      const res = await axios.get('http://127.0.0.1:5000/generate-pushups-report');
-      setRepData(res.data);
-      setMessage(res.data.message);
+      const res = await axios.get("http://127.0.0.1:5000/generate-pushups-report");
+      const reportData = res.data;
+      setRepData(reportData);
+      setMessage(reportData.message);
+
+      // Prepare the report object for Firebase
+      const reportToSave = {
+        workout: "pushups",
+        timestamp: new Date().toISOString(),
+        reps: reportData.reps,
+        duration_sec: reportData.duration,
+        mode: "default",
+        calories: reportData.calories
+      };
+
+      await saveWorkoutReport(reportToSave);
     } catch (error) {
-      setMessage('❌ Failed to generate report.');
+      setMessage("❌ Failed to generate report.");
     }
   };
 
