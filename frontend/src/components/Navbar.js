@@ -16,11 +16,18 @@ function Navbar() {
         <li><Link to="/bicep-curls">Bicep Curls</Link></li>
         <li><Link to="/report">Report</Link></li>
         <li><Link to="/about">About</Link></li>
-        {user && (
+
+        {user ? (
           <li>
             <button onClick={logout} className="logout-btn">
               Sign Out
             </button>
+          </li>
+        ) : (
+          <li>
+            <Link to="/login" className="signin-btn">
+              Sign In
+            </Link>
           </li>
         )}
       </ul>
@@ -28,4 +35,4 @@ function Navbar() {
   );
 }
 
-export default Navbar; 
+export default Navbar;
