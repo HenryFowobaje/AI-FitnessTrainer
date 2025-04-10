@@ -1,4 +1,3 @@
-// Report.js
 import React, { useEffect, useState } from "react";
 import { db, auth } from "../firebase";
 import {
@@ -15,59 +14,64 @@ function Report() {
   const [reportData, setReportData] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch reports only after confirming the user is available.
+  const fetchReports = async (user) => {
+    try {
+      const q = query(
+        collection(db, "workouts"),
+        where("userId", "==", user.uid),
+        orderBy("timestamp", "desc"),
+        limit(5)
+      );
+
+      const snapshot = await getDocs(q);
+      console.log("📦 Docs found:", snapshot.docs.length);
+
+      if (snapshot.empty) {
+        console.log("🕳 No reports found for this user");
+      }
+
+      const data = snapshot.docs.map(doc => {
+        const d = doc.data();
+        return {
+          type: d.workout?.charAt(0).toUpperCase() + d.workout?.slice(1),
+          date: new Date(d.timestamp).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+          }),
+          reps: d.reps,
+          duration: `${Math.max(1, Math.round(d.duration_sec / 60))} min`,
+          calories: d.calories ?? 0
+        };
+      });
+
+      console.log("📊 Final report data:", data);
+      setReportData(data);
+    } catch (error) {
+      console.error("❌ Error fetching workout reports:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchReports = async () => {
-      const user = auth.currentUser;
-      console.log("👤 Current Firebase user:", user);
-
-      if (!user) {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      console.log("👤 Auth state changed:", user);
+      if (user) {
+        // User is authenticated—fetch reports.
+        fetchReports(user);
+      } else {
+        // No user is signed in, update UI accordingly.
+        setLoading(false);
         console.warn("⚠️ No user logged in — can't fetch reports");
-        setLoading(false);
-        return;
       }
+    });
 
-      try {
-        const q = query(
-          collection(db, "workouts"),
-          where("userId", "==", user.uid),
-          orderBy("timestamp", "desc"),
-          limit(5)
-        );
-
-        const snapshot = await getDocs(q);
-        console.log("📦 Docs found:", snapshot.docs.length);
-
-        if (snapshot.empty) {
-          console.log("🕳 No reports found for this user");
-        }
-
-        const data = snapshot.docs.map(doc => {
-          const d = doc.data();
-          return {
-            type: d.workout?.charAt(0).toUpperCase() + d.workout?.slice(1),
-            date: new Date(d.timestamp).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric"
-            }),
-            reps: d.reps,
-            duration: `${Math.max(1, Math.round(d.duration_sec / 60))} min`,
-            calories: d.calories ?? 0
-          };
-        });
-        
-
-        console.log("📊 Final report data:", data);
-        setReportData(data);
-      } catch (error) {
-        console.error("❌ Error fetching workout reports:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchReports();
+    // Cleanup the listener on unmount.
+    return unsubscribe;
   }, []);
+
   return (
     <div className="report-page">
       <h2 className="report-title">Recent Workout History</h2>
@@ -81,22 +85,21 @@ function Report() {
         <div className="report-list">
           {reportData.map((entry, index) => (
             <div key={index} className="report-card">
-            <div className="report-color-bar" />
-            <div className="report-info">
-              <div className="report-top-row">
-                <span className="report-type">{entry.type}</span>
-                <span className="report-reps">{entry.reps} reps</span>
-              </div>
-              <div className="report-bottom-row">
-                <span className="report-date">{entry.date}</span>
-                <span className="report-duration">{entry.duration}</span>
-              </div>
-              <div className="report-extra-row">
-                <span className="report-calories">🔥 {entry.calories} kcal</span>
+              <div className="report-color-bar" />
+              <div className="report-info">
+                <div className="report-top-row">
+                  <span className="report-type">{entry.type}</span>
+                  <span className="report-reps">{entry.reps} reps</span>
+                </div>
+                <div className="report-bottom-row">
+                  <span className="report-date">{entry.date}</span>
+                  <span className="report-duration">{entry.duration}</span>
+                </div>
+                <div className="report-extra-row">
+                  <span className="report-calories">🔥 {entry.calories} kcal</span>
+                </div>
               </div>
             </div>
-          </div>
-          
           ))}
         </div>
       )}
