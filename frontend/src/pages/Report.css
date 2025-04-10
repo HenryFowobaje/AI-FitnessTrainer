@@ -1,69 +1,68 @@
 .report-page {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .report-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 4px;
-    color: #111;
-  }
-  
-  .report-subtitle {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 20px;
-  }
-  
-  .report-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  .report-card {
-    display: flex;
-    align-items: center;
-    background-color: #f9f9fb;
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  }
-  
-  .report-color-bar {
-    width: 6px;
-    height: 40px;
-    background-color: #7f56d9;
-    border-radius: 4px;
-    margin-right: 16px;
-  }
-  
-  .report-info {
-    flex: 1;
-  }
-  
-  .report-top-row,
-  .report-bottom-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-  }
-  
-  .report-type {
-    font-weight: 600;
-    color: #111;
-  }
-  
-  .report-reps {
-    font-weight: 600;
-    color: #111;
-  }
-  
-  .report-date,
-  .report-duration {
-    color: #666;
-  }
-  
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.report-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #111;
+}
+
+.report-subtitle {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.report-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.report-card {
+  display: flex;
+  align-items: center;
+  background-color: #f9f9fb;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.report-color-bar {
+  width: 6px;
+  height: 40px;
+  background-color: #7f56d9;
+  border-radius: 4px;
+  margin-right: 16px;
+}
+
+.report-info {
+  flex: 1;
+}
+
+.report-top-row,
+.report-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.report-type {
+  font-weight: 600;
+  color: #111;
+}
+
+.report-reps {
+  font-weight: 600;
+  color: #111;
+}
+
+.report-date,
+.report-duration {
+  color: #666;
+}

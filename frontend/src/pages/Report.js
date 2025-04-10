@@ -51,9 +51,11 @@ function Report() {
               day: "numeric"
             }),
             reps: d.reps,
-            duration: `${Math.max(1, Math.round(d.duration_sec / 60))} min`
+            duration: `${Math.max(1, Math.round(d.duration_sec / 60))} min`,
+            calories: d.calories ?? 0
           };
         });
+        
 
         console.log("📊 Final report data:", data);
         setReportData(data);
@@ -80,18 +82,22 @@ function Report() {
         <div className="report-list">
           {reportData.map((entry, index) => (
             <div key={index} className="report-card">
-              <div className="report-color-bar" />
-              <div className="report-info">
-                <div className="report-top-row">
-                  <span className="report-type">{entry.type}</span>
-                  <span className="report-reps">{entry.reps} reps</span>
-                </div>
-                <div className="report-bottom-row">
-                  <span className="report-date">{entry.date}</span>
-                  <span className="report-duration">{entry.duration}</span>
-                </div>
+            <div className="report-color-bar" />
+            <div className="report-info">
+              <div className="report-top-row">
+                <span className="report-type">{entry.type}</span>
+                <span className="report-reps">{entry.reps} reps</span>
+              </div>
+              <div className="report-bottom-row">
+                <span className="report-date">{entry.date}</span>
+                <span className="report-duration">{entry.duration}</span>
+              </div>
+              <div className="report-extra-row">
+                <span className="report-calories">🔥 {entry.calories} kcal</span>
               </div>
             </div>
+          </div>
+          
           ))}
         </div>
       )}
