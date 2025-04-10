@@ -47,7 +47,7 @@ function BicepCurls() {
       };
 
       console.log("📝 Pushing this to Firebase:", reportToSave);
-  
+ 
       await saveWorkoutReport(reportToSave);
     } catch (error) {
       setMessage("❌ Failed to generate report.");
