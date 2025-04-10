@@ -31,26 +31,26 @@ function Pushups() {
 
   const generateReport = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:5000/generate-pushups-report");
-      const reportData = res.data;
-      setRepData(reportData);
-      setMessage(reportData.message);
-
-      // Prepare the report object for Firebase
+      const res = await axios.get('http://127.0.0.1:5000/generate-pushups-report');
+      setRepData(res.data);
+      setMessage(res.data.message);
+  
       const reportToSave = {
         workout: "pushups",
         timestamp: new Date().toISOString(),
-        reps: reportData.reps,
-        duration_sec: reportData.duration,
+        reps: res.data.reps,
+        duration_sec: res.data.duration,
         mode: "default",
-        calories: reportData.calories
+        calories: res.data.calories
       };
 
+      console.log("📝 Pushing this to Firebase:", reportToSave);
       await saveWorkoutReport(reportToSave);
     } catch (error) {
       setMessage("❌ Failed to generate report.");
     }
   };
+  
 
   return (
     <div className="pushups-page">
