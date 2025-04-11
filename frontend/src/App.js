@@ -11,6 +11,7 @@ import About from './pages/About';
 import Report from './pages/Report';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/report" element={<Report />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </Router>
   );
